@@ -4,12 +4,13 @@ const {PORT, DATABASE_URL,DOMAINS } = require('./config');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
+const {router:testRouter } = require('./routers/test-router');
 const app = express();
 app.use(jsonParser);
 app.set('trust proxy', true)
 app.use(function (req, res, next) {
     let origin = req.headers.origin;
-    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept');
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
     if (req.method === 'OPTIONS') {
@@ -17,6 +18,8 @@ app.use(function (req, res, next) {
     }
     next();
 });
+
+app.use('/api/test',testRouter);
 
 function runServer( databaseUrl, port = PORT) {
     return new Promise((resolve, reject) => {
