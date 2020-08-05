@@ -2,7 +2,9 @@ const {ADMIN_S} = require('../../config');
 
 function checkSave(req,res,next){
     let {secret} = req.query;
-    if(secret === ADMIN_S){
+    let buf = Buffer.from(secret, 'base64').toString(); 
+    //console.log(buf);
+    if(buf === ADMIN_S){
         next();
     }
     else{
