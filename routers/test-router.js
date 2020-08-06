@@ -1,44 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const {checkSave} = require('./tools/toolExports');
+const {checkSave,formatData,checkExisting,checkGet} = require('./tools/toolExports');
+const {Form} = require('../models/form-data');
 
-router.post('/',checkSave,(req,res) => {
+router.post('/',checkSave,async (req,res) => {
     //const {date,lessonType,notes,students,teacher} = req.body;
-    console.log(req.body);
-    return res.json({
-        code:200,
-        message:'Data created'
-    });
-    /*
-    return Lesson.create({
-        date,
-        lessonType,
-        notes,
-        students,
-        teacher
-    })
-
-    .then(lesson => {
+    try{
+        console.log(req.body);
+        let formatedData = formatData(req.body);
+        console.log(formatedData);
+        let result = await checkExisting(formatedData,Form)
+        await Form.create(formatedData)
         return res.json({
             code:200,
-            message:'Lesson created'
+            message:'Data created'
         });
-    })
-
-    .catch(err => {
+    }
+    catch(err){
         console.log('error ',err);
-        if(err.message.includes('E11000')){
-            return res.json({
-                code:401,
-                message:'Lesson already exists'
-            });
-        }
         return res.json({
             code:500,
             message:'an error occured'
         });
-    })
-    */
+    }
+    
+});
+
+router.get('/',checkGet,async (req,res) => {
+    //const {date,lessonType,notes,students,teacher} = req.body;
+    try{
+        let forms = await Form.find({})
+        return res.json({
+            code:200,
+            results:forms.map(form => form.serialize())
+        });
+    }
+    catch(err){
+        console.log('error ',err);
+        return res.json({
+            code:500,
+            message:'an error occured'
+        });
+    }
     
 });
 

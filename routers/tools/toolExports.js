@@ -1,3 +1,4 @@
-const {checkSave} = require('./checkSave');
+const {checkSave,checkGet} = require('./checkSave');
+const {formatData,checkExisting} = require('./helpers');
 
-module.exports = {checkSave};
+module.exports = {checkSave,formatData,checkExisting,checkGet};
