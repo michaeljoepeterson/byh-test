@@ -20,7 +20,7 @@ formSchema.methods.serialize = function(){
         'Location of problem':this.location,
         Type:this.type,
         Priority:this.priority,
-        'Due date':this.dueDate ? this.details : null,
+        'Due date':this.dueDate ? this.dueDate : null,
         'More Details':this.details ? this.details : null
 	};
 }
