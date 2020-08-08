@@ -15,13 +15,13 @@ formSchema.methods.serialize = function(){
     return {
 		id:this._id,
 		Name:this.name,
-        Email:this.email,
+        Email:this.email ? this.email : null,
         Summary:this.summary,
         'Location of problem':this.location,
         Type:this.type,
         Priority:this.priority,
-        'Due date':this.dueDate,
-        'More Details':this.details
+        'Due date':this.dueDate ? this.details : null,
+        'More Details':this.details ? this.details : null
 	};
 }
 
