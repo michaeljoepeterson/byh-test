@@ -23,7 +23,7 @@ formSchema.methods.serialize = function(){
         Priority:this.priority,
         'Due date':this.dueDate ? this.dueDate : null,
         'More Details':this.details ? this.details : null,
-        assignees:this.assignees
+        assignees:this.assignees.length > 0 ? this.assignees.map(assignee => assignee.serialize()) : this.assignees
 	};
 }
 

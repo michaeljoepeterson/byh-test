@@ -29,10 +29,42 @@ router.post('/',checkSave,async (req,res) => {
 router.get('/',checkGet,async (req,res) => {
     //const {date,lessonType,notes,students,teacher} = req.body;
     try{
-        let forms = await Form.find({})
+        let forms = await Form.find({}).populate({
+            path:'assignees',
+            populate:{
+                path:'occupation'
+            }
+        })
         return res.json({
             code:200,
             results:forms.map(form => form.serialize())
+        });
+    }
+    catch(err){
+        console.log('error ',err);
+        return res.json({
+            code:500,
+            message:'an error occured'
+        });
+    }
+    
+});
+
+router.put('/assignee/:id',checkSave,async (req,res) => {
+    //const {date,lessonType,notes,students,teacher} = req.body;
+    try{
+        let {id} = req.params;
+        let {employeeIds} = req.body;
+        let forms = await Form.findOneAndUpdate({'_id':id},{
+            $set: {
+                assignees: employeeIds
+            }
+        },{
+            useFindAndModify:false
+        })
+        return res.json({
+            code:200,
+            message:'Updated Assignees'
         });
     }
     catch(err){

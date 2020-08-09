@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const occupation = require('./occupation');
 
 const employeeSchema = mongoose.Schema({
     name:{type:String,required:true},
@@ -6,10 +7,11 @@ const employeeSchema = mongoose.Schema({
 });
 
 employeeSchema.methods.serialize = function(){
+    console.log(this.occupation);
     return {
 		id:this._id,
 		name:this.name,
-        occupation:this.occupation ? this.email : null,
+        occupation:this.occupation.serialize()
 	};
 }
 

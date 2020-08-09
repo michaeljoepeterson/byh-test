@@ -32,7 +32,7 @@ router.post('/',checkSave,async (req,res) => {
 router.get('/',checkGet,async (req,res) => {
     //const {date,lessonType,notes,students,teacher} = req.body;
     try{
-        let employees = await Employee.find({})
+        let employees = await Employee.find({}).populate('occupation')
         return res.json({
             code:200,
             results:employees.map(employee => employee.serialize())
