@@ -18,7 +18,7 @@ function checkSave(req,res,next){
 function checkGet(req,res,next){
     let {secret} = req.query;
     let buf = Buffer.from(secret, 'base64').toString(); 
-    //console.log(buf);
+    console.log(buf);
     if(buf === ADMIN_G){
         next();
     }

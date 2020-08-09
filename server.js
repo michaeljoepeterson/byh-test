@@ -4,7 +4,7 @@ const {PORT, DATABASE_URL,DOMAINS } = require('./config');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
-const {router:testRouter } = require('./routers/test-router');
+const {router:testRouter } = require('./routers/main-router');
 const app = express();
 app.use(jsonParser);
 app.set('trust proxy', true)
@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/api/test',testRouter);
+app.use('/api',testRouter);
 
 function runServer( databaseUrl, port = PORT) {
     return new Promise((resolve, reject) => {

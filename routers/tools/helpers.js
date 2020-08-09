@@ -69,4 +69,24 @@ async function checkExisting(data,model){
     }
 }
 
-module.exports = {formatData,checkExisting};
+async function GetOccupationId(occupation,name){
+    try{
+        let results = await occupation.find({name:name});
+        console.log(results);
+        if(results.length === 1){
+            return results[0]._id;
+        }
+        else{
+            throw({
+                code:422,
+                message:'Error finding occupation'
+            });
+        }
+        
+    }
+    catch(err){
+        throw(err);
+    }
+}
+
+module.exports = {formatData,checkExisting,GetOccupationId};

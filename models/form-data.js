@@ -8,7 +8,8 @@ const formSchema = mongoose.Schema({
     type:{type:String,required:true},
     priority:{type:String,required:true},
     dueDate:{type:Date},
-    details:{type:String}
+    details:{type:String},
+    assignees:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Employee', unique: false, required: [false, 'No employees found']}]
 });
 
 formSchema.methods.serialize = function(){
@@ -21,7 +22,8 @@ formSchema.methods.serialize = function(){
         Type:this.type,
         Priority:this.priority,
         'Due date':this.dueDate ? this.dueDate : null,
-        'More Details':this.details ? this.details : null
+        'More Details':this.details ? this.details : null,
+        assignees:this.assignees
 	};
 }
 
