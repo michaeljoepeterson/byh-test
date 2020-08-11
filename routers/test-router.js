@@ -55,17 +55,26 @@ router.put('/assignee/:id',checkSave,async (req,res) => {
     try{
         let {id} = req.params;
         let {employeeIds} = req.body;
-        let forms = await Form.findOneAndUpdate({'_id':id},{
-            $set: {
-                assignees: employeeIds
-            }
-        },{
-            useFindAndModify:false
-        })
-        return res.json({
-            code:200,
-            message:'Updated Assignees'
-        });
+        if(employeeIds.length !== 0){
+            let forms = await Form.findOneAndUpdate({'_id':id},{
+                $set: {
+                    assignees: employeeIds
+                }
+            },{
+                useFindAndModify:false
+            }) 
+            return res.json({
+                code:200,
+                message:'Updated Assignees'
+            });
+        }
+        else{
+           return res.json({
+                code:200,
+                message:'No data'
+            }); 
+        }
+        
     }
     catch(err){
         console.log('error ',err);
