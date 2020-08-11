@@ -49,13 +49,13 @@ router.get('/',checkGet,async (req,res) => {
     }
     
 });
-
+//add check for data type
 router.put('/assignee/:id',checkSave,async (req,res) => {
     //const {date,lessonType,notes,students,teacher} = req.body;
     try{
         let {id} = req.params;
         let {employeeIds} = req.body;
-        if(employeeIds.length !== 0){
+        if(employeeIds.length !== 0 && typeof employeeIds[0] === 'string'){
             let forms = await Form.findOneAndUpdate({'_id':id},{
                 $set: {
                     assignees: employeeIds
